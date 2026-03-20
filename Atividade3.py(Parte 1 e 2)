@@ -1,0 +1,28 @@
+
+ROLES = {
+    "RH": {"ver_salario", "editar_perfil"},
+    "TI": {"acesso_servidor", "editar_perfil"},
+    "FINANCEIRO": {"ver_faturamento", "emitir_nota"}
+}
+
+
+cargos_usuario = ["RH", "TI"]
+
+permissoes_usuario = set().union(*(ROLES[cargo] for cargo in cargos_usuario))
+
+
+arquivo_confidencial = {"ver_salario", "acesso_servidor"}
+
+
+tem_acesso = arquivo_confidencial.issubset(permissoes_usuario)
+
+
+print(f"--- Sistema de Controle de Acesso ---")
+print(f"Permissões Ativas: {permissoes_usuario}")
+print(f"Requisitos do Arquivo: {arquivo_confidencial}")
+
+if tem_acesso:
+    print("\n✅ ACESSO CONCEDIDO: O usuário possui todos os privilégios necessários.")
+else:
+    faltando = arquivo_confidencial - permissoes_usuario
+    print(f"\n❌ ACESSO NEGADO: Faltam as permissões: {faltando}")
